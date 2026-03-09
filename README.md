@@ -41,5 +41,5 @@ Le cours intègre deux projets d'application permettant de comprendre la différ
 * **Concept** : Prédire un événement météorologique à partir de 3 paramètres (Température, Humidité, Pression).
 * **Analyse** : Met en avant l'importance du prétraitement des données. Contrairement au sinus, la relation entre ces variables météo n'est pas analytique, ce qui justifie ici l'utilisation de l'IA.
 
-## 🌿 Sobriété Numérique et Conclusion
+## 🌿 Conclusion
 L'un des enseignements majeurs de ce module est l'approche critique vis-à-vis de l'IA. L'utilisation d'un modèle neuronal sur un système embarqué a un coût important (énergie, latence, mémoire). Ce dépôt met en évidence la nécessité d'optimiser les modèles (quantification int8, pruning) et souligne que l'IA n'est pertinente que si elle apporte un bénéfice clair face à une solution déterministe simple.
