@@ -46,7 +46,8 @@ Voici les graphes des modèles correspondants aux configurations testées :
 
 <img width="608" height="480" alt="image" src="https://github.com/user-attachments/assets/99877b0a-4e78-4acf-b7c7-14aeda2b1d27" />
 
-1.2 Justification des Compromis 
+
+### 1.2 Justification des Compromis 
 
 L'analyse des résultats met en évidence plusieurs compromis fondamentaux, particulièrement critiques dans le contexte de l'Intelligence Artificielle Embarquée où les ressources (mémoire, calcul, énergie) sont limitées.
 
