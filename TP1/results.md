@@ -91,5 +91,9 @@ L'analyse des résultats met en évidence plusieurs compromis fondamentaux, part
 | **RMSprop** | **96.95%** | *6s* | Excellent compromis, très stable. |
 | **Adagrad** | **89.14%** | *6s* | Diminue le taux d'apprentissage, peut s'essouffler sur peu d'époques. |
 
-### 2.2 Analyse pour l'IA Embarquée
-*(Note : Changer d'optimiseur n'impacte ni la taille du modèle en mémoire, ni son temps de calcul lors de l'inférence sur la carte cible. L'optimiseur ne sert qu'à accélérer la phase d'entraînement sur le PC.)*
+### 2.2 Analyse pour l'IA Embarquée (Justification)
+
+L'analyse de ces différents algorithmes d'optimisation amène une conclusion essentielle pour le déploiement sur système embarqué :
+
+* **Aucun impact sur l'inférence (le système cible) :** Le choix de l'optimiseur n'a **aucune influence** sur le modèle final une fois compilé pour la cible. Que le réseau soit entraîné avec SGD ou Adam, la taille en mémoire reste strictement identique (50 890 paramètres pour notre architecture Tanh), tout comme le nombre d'opérations mathématiques nécessaires pour faire une prédiction. L'optimiseur n'existe plus lors de l'exécution sur le microcontrôleur.
+* **Efficacité de la phase de développement (Training) :** Bien que l'optimiseur ne tourne pas sur la cible embarquée, il est crucial pour l'ingénieur. **Adam** est ici le meilleur choix. Il permet d'atteindre la convergence maximale (près de 97%) en un minimum d'époques. Cela permet d'économiser un temps précieux et des ressources de calcul (énergie/GPU) lors de la phase d'entraînement par rapport à SGD ou Adagrad.
