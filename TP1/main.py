@@ -7,8 +7,8 @@ import random
 
 # --- 1. CONFIGURATION ---
 # Changez cette variable pour tester les différentes questions du TP :
-# Options disponibles : 'softmax_only' (1.a), 'relu' (1.b), 'tanh' (1.c)
-ACTIVATION_CHOICE = 'tanh' 
+# Options disponibles : 'softmax_only' (1.a), 'relu' (1.b), 'tanh' (1.c), 'sigmoid' (1.d)
+ACTIVATION_CHOICE = 'sigmoid' 
 
 # Fixer les graines pour la reproductibilité
 np.random.seed(42)
@@ -54,6 +54,12 @@ elif ACTIVATION_CHOICE == 'tanh':
         tf.keras.layers.Dense(10, activation='softmax')
     ])
 
+elif ACTIVATION_CHOICE == 'sigmoid':
+    # 1.d : 1 couche cachée avec Sigmoid
+    model = tf.keras.Sequential([
+        tf.keras.layers.Dense(64, activation='sigmoid', input_shape=(784,)),
+        tf.keras.layers.Dense(10, activation='softmax')
+    ])
 else:
     raise ValueError("Choix d'activation non reconnu.")
 
