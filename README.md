@@ -1,1 +1,1 @@
-# ETRS606_SPI
+# ETRS606_SPI : IA EMbarquée
