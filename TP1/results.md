@@ -72,3 +72,24 @@ L'analyse des résultats met en évidence plusieurs compromis fondamentaux, part
     Le modèle ReLU (2 couches) offre la meilleure accuracy, mais son coût mémoire est massif : 109 386 paramètres (environ 437 Ko). Il est 14 fois plus lourd que le modèle Baseline pour un gain de précision d'environ 4.6%.
 
     Conclusion pour l'embarqué : Si l'application visée nécessite une fiabilité absolue et tourne sur un Raspberry Pi ou un processeur ARM Cortex-A, le modèle (b) est préférable. En revanche, pour un petit microcontrôleur Cortex-M de quelques dizaines de Ko de RAM, on privilégiera des architectures intermédiaires (comme le modèle c/d) ou l'on cherchera à réduire la taille de la couche d'entrée ou à utiliser la quantification (Quantization).
+
+
+   ## 2. Choix de l'Algorithme d'Optimisation
+
+**Conditions de test :**
+* Architecture fixée : 1 couche cachée (64 neurones), activation `tanh` (Mémoire optimisée : 50 890 synapses)
+* Fonction coût : `categorical_crossentropy`
+* Époques : 5
+* Batch size : 32
+
+### 2.1 Tableau Comparatif des Optimiseurs
+
+| Optimiseur | Accuracy (Test) | Temps d'exécution / Époque | Comportement observé |
+| :--- | :--- | :--- | :--- |
+| **SGD** | *92.84%* | *6s* | Base simple, progression souvent plus lente nécessitant plus d'époques. |
+| **Adam** | **96.99%** | *5s* | Très rapide, adapte le pas d'apprentissage dynamiquement. |
+| **RMSprop** | **96.95%** | *6s* | Excellent compromis, très stable. |
+| **Adagrad** | **89.14%** | *6s* | Diminue le taux d'apprentissage, peut s'essouffler sur peu d'époques. |
+
+### 2.2 Analyse pour l'IA Embarquée
+*(Note : Changer d'optimiseur n'impacte ni la taille du modèle en mémoire, ni son temps de calcul lors de l'inférence sur la carte cible. L'optimiseur ne sert qu'à accélérer la phase d'entraînement sur le PC.)*
