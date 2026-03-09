@@ -46,3 +46,28 @@ Voici les graphes des modèles correspondants aux configurations testées :
 
 <img width="608" height="480" alt="image" src="https://github.com/user-attachments/assets/99877b0a-4e78-4acf-b7c7-14aeda2b1d27" />
 
+1.2 Justification des Compromis 
+
+L'analyse des résultats met en évidence plusieurs compromis fondamentaux, particulièrement critiques dans le contexte de l'Intelligence Artificielle Embarquée où les ressources (mémoire, calcul, énergie) sont limitées.
+
+1. Compromis Accuracy vs Architecture et Fonction d'Activation
+
+    L'apport des couches cachées : Le passage d'un modèle linéaire (Baseline à 92.61%) à des modèles profonds permet de faire un bond significatif en précision (gain d'environ 4 à 5%). Les couches cachées permettent d'extraire des caractéristiques non-linéaires des images.
+
+    ReLU vs Tanh vs Sigmoid : L'architecture b (ReLU) obtient la meilleure précision (97.24%). Pour une architecture identique (1 couche de 64 neurones), Tanh (96.99%) surpasse Sigmoid (96.39%). Cela s'explique par le fait que la fonction Tanh est centrée sur zéro (sorties entre -1 et 1), ce qui facilite l'optimisation par rapport à Sigmoid (sorties entre 0 et 1).
+
+2. Compromis Accuracy vs Nombre d'Époques (Vitesse de convergence)
+
+    Les tests ont été figés à 5 époques. À ce stade précoce, ReLU converge très rapidement vers une haute précision car elle ne souffre pas du problème de saturation des gradients pour les valeurs positives.
+
+    La fonction Sigmoid montre une précision légèrement en retrait après 5 époques. Elle est sujette au phénomène de "Vanishing Gradient" (disparition du gradient) aux extrémités, ce qui ralentit l'apprentissage. Pour atteindre la même précision que ReLU ou Tanh, Sigmoid nécessiterait probablement beaucoup plus d'époques, ce qui implique un temps d'entraînement plus long et une plus grande consommation énergétique.
+
+3. Compromis Accuracy vs Nombre de Synapses (Empreinte Mémoire)
+
+    C'est le critère le plus important en IA Embarquée. Le nombre de synapses dicte la dimension de la matrice des poids W, qui doit être stockée en mémoire (généralement en Flash) et chargée en RAM lors de l'inférence.
+
+    Le modèle Baseline est extrêmement léger (7 850 paramètres, soit environ 31 Ko si stocké en flottants 32 bits). Il est idéal pour un microcontrôleur très contraint, bien que sa précision soit perfectible.
+
+    Le modèle ReLU (2 couches) offre la meilleure accuracy, mais son coût mémoire est massif : 109 386 paramètres (environ 437 Ko). Il est 14 fois plus lourd que le modèle Baseline pour un gain de précision d'environ 4.6%.
+
+    Conclusion pour l'embarqué : Si l'application visée nécessite une fiabilité absolue et tourne sur un Raspberry Pi ou un processeur ARM Cortex-A, le modèle (b) est préférable. En revanche, pour un petit microcontrôleur Cortex-M de quelques dizaines de Ko de RAM, on privilégiera des architectures intermédiaires (comme le modèle c/d) ou l'on cherchera à réduire la taille de la couche d'entrée ou à utiliser la quantification (Quantization).
