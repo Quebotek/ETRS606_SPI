@@ -1,15 +1,15 @@
 # ETRS606 : IA Embarquée (Edge AI) - Travaux Pratiques et Projets
 
 ## 📖 Description du Module
-Ce dépôt regroupe les travaux pratiques et projets réalisés dans le cadre du module **ETRS606 : IA Embarquée**. L'objectif de ce cours est de concevoir des systèmes embarqués d'interface capteurs sous le paradigme des circuits neuromorphiques, à la convergence de la microélectronique et de l'intelligence artificielle. 
+Ce dépôt regroupe les travaux pratiques et projets réalisés dans le cadre du module * **ETRS606 : IA Embarquée**. L'objectif de ce cours est de concevoir des systèmes embarqués d'interface capteurs sous le paradigme des circuits neuromorphiques, à la convergence de la microélectronique et de l'intelligence artificielle. 
 
 Le module explore les compromis nécessaires pour déployer des réseaux de neurones sur des architectures matérielles contraintes (mémoire, complexité de calcul, précision, consommation énergétique).
 
 ## 🛠️ Matériel Utilisé
 Les déploiements et tests sont réalisés sur des cartes de développement de la famille STM32 :
-**NUCLEO-N657X0** : Basée sur un ARM Cortex-M33 (jusqu'à 160 MHz) avec 320 ko de RAM et 512 ko de Flash. Elle intègre un accélérateur matériel neuromorphique (NPU Neural-ART à 600 GOPS) optimisé pour l'inférence de modèles CNN.
-**NUCLEO-F446RE** : Basée sur un Cortex-M4 (180 MHz) avec 128 ko de RAM et 512 ko de Flash.
-**Shield X-NUCLEO-IKS01A3** : Carte d'interface regroupant plusieurs capteurs MEMS (accélération, champ magnétique, température, humidité, pression) communicant via un bus I2C.
+* **NUCLEO-N657X0** : Basée sur un ARM Cortex-M33 (jusqu'à 160 MHz) avec 320 ko de RAM et 512 ko de Flash. Elle intègre un accélérateur matériel neuromorphique (NPU Neural-ART à 600 GOPS) optimisé pour l'inférence de modèles CNN.
+* **NUCLEO-F446RE** : Basée sur un Cortex-M4 (180 MHz) avec 128 ko de RAM et 512 ko de Flash.
+* **Shield X-NUCLEO-IKS01A3** : Carte d'interface regroupant plusieurs capteurs MEMS (accélération, champ magnétique, température, humidité, pression) communicant via un bus I2C.
 
 ---
 
@@ -35,11 +35,11 @@ Ce second TP est orienté programmation embarquée bas niveau et intégration sy
 Le cours intègre deux projets d'application permettant de comprendre la différence radicale entre l'entraînement sur PC et l'inférence sur microcontrôleur.
 
 1. **Projet Sin(x)** : 
-**Concept** : Approximer la fonction $sin(x)$ avec un MLP (3 couches cachées de 16 neurones avec activation ReLU).
-**Analyse** : Comparaison entre la méthode classique optimisée matériellement et l'inférence IA. L'approche classique consomme moins (environ 17 mA) et s'exécute plus vite que l'IA (qui peut monter à 36 mA).
+* **Concept** : Approximer la fonction $sin(x)$ avec un MLP (3 couches cachées de 16 neurones avec activation ReLU).
+* **Analyse** : Comparaison entre la méthode classique optimisée matériellement et l'inférence IA. L'approche classique consomme moins (environ 17 mA) et s'exécute plus vite que l'IA (qui peut monter à 36 mA).
 2. **Projet Meteostat** : 
-**Concept** : Prédire un événement météorologique à partir de 3 paramètres (Température, Humidité, Pression).
-**Analyse** : Met en avant l'importance du prétraitement des données. Contrairement au sinus, la relation entre ces variables météo n'est pas analytique, ce qui justifie ici l'utilisation de l'IA.
+* **Concept** : Prédire un événement météorologique à partir de 3 paramètres (Température, Humidité, Pression).
+* **Analyse** : Met en avant l'importance du prétraitement des données. Contrairement au sinus, la relation entre ces variables météo n'est pas analytique, ce qui justifie ici l'utilisation de l'IA.
 
 ## 🌿 Sobriété Numérique et Conclusion
 L'un des enseignements majeurs de ce module est l'approche critique vis-à-vis de l'IA. L'utilisation d'un modèle neuronal sur un système embarqué a un coût important (énergie, latence, mémoire). Ce dépôt met en évidence la nécessité d'optimiser les modèles (quantification int8, pruning) et souligne que l'IA n'est pertinente que si elle apporte un bénéfice clair face à une solution déterministe simple.
