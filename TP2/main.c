@@ -118,9 +118,9 @@ int main(void)
   printf("Welcome to STM32 world !\n\rBoot project is running...\n\r");
 
   /* -- Sample board code to switch on leds ---- */
-  BSP_LED_On(LED_BLUE);
+ /* BSP_LED_On(LED_BLUE);
   BSP_LED_On(LED_RED);
-  BSP_LED_On(LED_GREEN);
+  BSP_LED_On(LED_GREEN);*/
 
   /* USER CODE END BSP */
 
@@ -130,7 +130,15 @@ int main(void)
   {
 
     /* USER CODE END WHILE */
-
+	  BSP_LED_On(LED_BLUE);
+	  HAL_Delay(3000);
+	  BSP_LED_Off(LED_BLUE);
+	  BSP_LED_On(LED_RED);
+	  HAL_Delay(3000);
+	  BSP_LED_Off(LED_RED);
+	  BSP_LED_On(LED_GREEN);
+	  HAL_Delay(3000);
+	  BSP_LED_Off(LED_GREEN);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
