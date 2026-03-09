@@ -5,17 +5,26 @@ from callbackPlots import AccuracyPlotCallback, count_neurons_and_synapses
 import numpy as np
 import random
 
-# --- 1. CONFIGURATION ---
-# Changez cette variable pour tester les différentes questions du TP :
-# Options disponibles : 'softmax_only' (1.a), 'relu' (1.b), 'tanh' (1.c), 'sigmoid' (1.d)
-ACTIVATION_CHOICE = 'sigmoid' 
+# ==========================================
+# --- 1. CONFIGURATION GLOBALE DU TEST ---
+# ==========================================
 
-# Fixer les graines pour la reproductibilité
+# 1. Choix de l'architecture (Fonction d'activation)
+# Options : 'softmax_only', 'relu', 'tanh', 'sigmoid'
+ACTIVATION_CHOICE = 'tanh' 
+
+# 2. Choix de l'algorithme d'optimisation
+# Options : 'sgd', 'adam', 'rmsprop', 'adagrad'
+OPTIMIZER_CHOICE = 'adagrad' 
+
+# Fixer les graines pour garantir que les mêmes conditions donnent les mêmes résultats
 np.random.seed(42)
 tf.random.set_seed(42)
 random.seed(42)
 
+# ==========================================
 # --- 2. PRÉPARATION DES DONNÉES ---
+# ==========================================
 print("Chargement et préparation des données...")
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
 
@@ -30,32 +39,27 @@ x_test = x_test.reshape(-1, 784)
 y_train = tf.keras.utils.to_categorical(y_train, 10)
 y_test = tf.keras.utils.to_categorical(y_test, 10)
 
+# ==========================================
 # --- 3. CONSTRUCTION DU MODÈLE ---
-print(f"Construction du modèle avec la configuration : {ACTIVATION_CHOICE}")
+# ==========================================
+print(f"Construction du modèle : Architecture [{ACTIVATION_CHOICE.upper()}] | Optimiseur [{OPTIMIZER_CHOICE.upper()}]")
 
 if ACTIVATION_CHOICE == 'softmax_only':
-    # 1.a : Couche d'entrée et sortie directe (Softmax)
     model = tf.keras.Sequential([
         tf.keras.layers.Dense(10, activation='softmax', input_shape=(784,))
     ])
-
 elif ACTIVATION_CHOICE == 'relu':
-    # 1.b : 2 couches cachées avec ReLU
     model = tf.keras.Sequential([
         tf.keras.layers.Dense(128, activation='relu', input_shape=(784,)),
         tf.keras.layers.Dense(64, activation='relu'),
         tf.keras.layers.Dense(10, activation='softmax')
     ])
-
 elif ACTIVATION_CHOICE == 'tanh':
-    # 1.c : 1 couche cachée avec Tanh
     model = tf.keras.Sequential([
         tf.keras.layers.Dense(64, activation='tanh', input_shape=(784,)),
         tf.keras.layers.Dense(10, activation='softmax')
     ])
-
 elif ACTIVATION_CHOICE == 'sigmoid':
-    # 1.d : 1 couche cachée avec Sigmoid
     model = tf.keras.Sequential([
         tf.keras.layers.Dense(64, activation='sigmoid', input_shape=(784,)),
         tf.keras.layers.Dense(10, activation='softmax')
@@ -63,8 +67,10 @@ elif ACTIVATION_CHOICE == 'sigmoid':
 else:
     raise ValueError("Choix d'activation non reconnu.")
 
+# ==========================================
 # --- 4. COMPILATION ET ENTRAÎNEMENT ---
-model.compile(optimizer='adam',
+# ==========================================
+model.compile(optimizer=OPTIMIZER_CHOICE,
               loss='categorical_crossentropy',
               metrics=['accuracy'])
 
@@ -77,13 +83,17 @@ history = model.fit(x_train, y_train,
                     validation_data=(x_test, y_test), 
                     callbacks=[plot_callback])
 
+# ==========================================
 # --- 5. ÉVALUATION ET EXPORT ---
+# ==========================================
 test_loss, test_acc = model.evaluate(x_test, y_test, verbose=0)
-print(f"\n--- RÉSULTATS POUR {ACTIVATION_CHOICE.upper()} ---")
-print(f"Test accuracy : {test_acc:.4f}")
+print(f"\n--- RÉSULTATS FINAUX ---")
+print(f"Architecture : {ACTIVATION_CHOICE.upper()}")
+print(f"Optimiseur   : {OPTIMIZER_CHOICE.upper()}")
+print(f"Test accuracy: {test_acc:.4f}")
 
-# Exporter l'architecture et compter les paramètres
-filename = f"model_architecture_{ACTIVATION_CHOICE}.png"
+# Le nom du fichier inclut maintenant les deux variables pour un tri facile
+filename = f"model_architecture_{ACTIVATION_CHOICE}_{OPTIMIZER_CHOICE}.png"
 plot_model(model, to_file=filename, show_shapes=True, show_layer_names=True, dpi=300)
 print(f"Architecture sauvegardée sous : {filename}")
 
