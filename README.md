@@ -13,7 +13,7 @@ Les déploiements et tests sont réalisés sur des cartes de développement de l
 
 ---
 
-## 🚀 TP1 : Problème MNIST (Apprentissage Automatique)
+## 🚀 TP1 : Problème MNIST 
 Ce TP se concentre sur la classification d'images de chiffres manuscrits (0 à 9) à partir du jeu de données classique MNIST. 
 **Objectif** : Implémenter un réseau de neurones dense (Multi-Layer Perceptron / MLP) avec une couche d'entrée de 784 neurones (images aplaties de 28x28 pixels) et une sortie de 10 neurones (pour les 10 classes).
 * **Expérimentations** : 
