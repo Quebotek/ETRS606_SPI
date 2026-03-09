@@ -7,8 +7,8 @@ import random
 
 # --- 1. CONFIGURATION ---
 # Changez cette variable pour tester les différentes questions du TP :
-# Options disponibles : 'softmax_only' (1.a), 'relu' (1.b)
-ACTIVATION_CHOICE = 'relu' 
+# Options disponibles : 'softmax_only' (1.a), 'relu' (1.b), 'tanh' (1.c)
+ACTIVATION_CHOICE = 'tanh' 
 
 # Fixer les graines pour la reproductibilité
 np.random.seed(42)
@@ -44,6 +44,13 @@ elif ACTIVATION_CHOICE == 'relu':
     model = tf.keras.Sequential([
         tf.keras.layers.Dense(128, activation='relu', input_shape=(784,)),
         tf.keras.layers.Dense(64, activation='relu'),
+        tf.keras.layers.Dense(10, activation='softmax')
+    ])
+
+elif ACTIVATION_CHOICE == 'tanh':
+    # 1.c : 1 couche cachée avec Tanh
+    model = tf.keras.Sequential([
+        tf.keras.layers.Dense(64, activation='tanh', input_shape=(784,)),
         tf.keras.layers.Dense(10, activation='softmax')
     ])
 
