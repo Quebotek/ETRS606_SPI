@@ -25,9 +25,9 @@ Choix de la fonction coût adaptée (*categorical_crossentropy* ou *sparse_categ
 
 ## 🔌 TP2 : Interface Capteurs & Réseau sur STM32
 Ce second TP est orienté programmation embarquée bas niveau et intégration système.
-**Partie 1 - LED Blink** : Prise en main de STM32 Cube IDE avec la réalisation d'un chenillard de 3 secondes sur les LEDs (Rouge, Vert, Bleu) et affichage des logs sur la console.
-**Partie 2 - Interface Capteurs (I2C)** : Intégration des drivers matériels STMicroelectronics pour lire les valeurs des capteurs (LSM6DSO, LIS2MDL, LIS2DW12, HTS221, LPS22HH, STTS751). Implémentation des fonctions bas niveau (`platform_read`, `platform_write`) via HAL I2C. Les LEDs servent de repère visuel de l'état (Rouge = occupé, Vert = disponible).
-**Partie 3 - Réseau Ethernet** : Mise en place du système d'exploitation temps réel FreeRTOS et de la pile réseau LWIP (DHCP + ICMP) pour exécuter un ping vers `google.com` via la prise RJ45 de la carte.
+* **Partie 1 - LED Blink** : Prise en main de STM32 Cube IDE avec la réalisation d'un chenillard de 3 secondes sur les LEDs (Rouge, Vert, Bleu) et affichage des logs sur la console.
+* **Partie 2 - Interface Capteurs (I2C)** : Intégration des drivers matériels STMicroelectronics pour lire les valeurs des capteurs (LSM6DSO, LIS2MDL, LIS2DW12, HTS221, LPS22HH, STTS751). Implémentation des fonctions bas niveau (`platform_read`, `platform_write`) via HAL I2C. Les LEDs servent de repère visuel de l'état (Rouge = occupé, Vert = disponible).
+* **Partie 3 - Réseau Ethernet** : Mise en place du système d'exploitation temps réel FreeRTOS et de la pile réseau LWIP (DHCP + ICMP) pour exécuter un ping vers `google.com` via la prise RJ45 de la carte.
 
 ---
 
