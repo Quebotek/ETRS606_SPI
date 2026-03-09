@@ -1,7 +1,7 @@
 # ETRS606 : IA Embarquée (Edge AI) - Travaux Pratiques et Projets
 
 ## 📖 Description du Module
-Ce dépôt regroupe les travaux pratiques et projets réalisés dans le cadre du module * **ETRS606 : IA Embarquée**. L'objectif de ce cours est de concevoir des systèmes embarqués d'interface capteurs sous le paradigme des circuits neuromorphiques, à la convergence de la microélectronique et de l'intelligence artificielle. 
+Ce dépôt regroupe les travaux pratiques et projets réalisés dans le cadre du module **ETRS606 : IA Embarquée**. L'objectif de ce cours est de concevoir des systèmes embarqués d'interface capteurs sous le paradigme des circuits neuromorphiques, à la convergence de la microélectronique et de l'intelligence artificielle. 
 
 Le module explore les compromis nécessaires pour déployer des réseaux de neurones sur des architectures matérielles contraintes (mémoire, complexité de calcul, précision, consommation énergétique).
 
