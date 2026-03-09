@@ -1,25 +1,25 @@
 # ETRS606 : IA Embarquée (Edge AI) - Travaux Pratiques et Projets
 
 ## 📖 Description du Module
-[cite_start]Ce dépôt regroupe les travaux pratiques et projets réalisés dans le cadre du module **ETRS606 : IA Embarquée**[cite: 1, 46, 197]. [cite_start]L'objectif de ce cours est de concevoir des systèmes embarqués d'interface capteurs sous le paradigme des circuits neuromorphiques, à la convergence de la microélectronique et de l'intelligence artificielle[cite: 279]. 
+Ce dépôt regroupe les travaux pratiques et projets réalisés dans le cadre du module **ETRS606 : IA Embarquée**. L'objectif de ce cours est de concevoir des systèmes embarqués d'interface capteurs sous le paradigme des circuits neuromorphiques, à la convergence de la microélectronique et de l'intelligence artificielle. 
 
-[cite_start]Le module explore les compromis nécessaires pour déployer des réseaux de neurones sur des architectures matérielles contraintes (mémoire, complexité de calcul, précision, consommation énergétique)[cite: 282, 358].
+Le module explore les compromis nécessaires pour déployer des réseaux de neurones sur des architectures matérielles contraintes (mémoire, complexité de calcul, précision, consommation énergétique).
 
 ## 🛠️ Matériel Utilisé
 Les déploiements et tests sont réalisés sur des cartes de développement de la famille STM32 :
-* [cite_start]**NUCLEO-N657X0** : Basée sur un ARM Cortex-M33 (jusqu'à 160 MHz) avec 320 ko de RAM et 512 ko de Flash[cite: 49, 373]. [cite_start]Elle intègre un accélérateur matériel neuromorphique (NPU Neural-ART à 600 GOPS) optimisé pour l'inférence de modèles CNN[cite: 50, 375].
-* [cite_start]**NUCLEO-F446RE** : Basée sur un Cortex-M4 (180 MHz) avec 128 ko de RAM et 512 ko de Flash[cite: 367].
-* [cite_start]**Shield X-NUCLEO-IKS01A3** : Carte d'interface regroupant plusieurs capteurs MEMS (accélération, champ magnétique, température, humidité, pression) communicant via un bus I2C[cite: 51, 52].
+**NUCLEO-N657X0** : Basée sur un ARM Cortex-M33 (jusqu'à 160 MHz) avec 320 ko de RAM et 512 ko de Flash. Elle intègre un accélérateur matériel neuromorphique (NPU Neural-ART à 600 GOPS) optimisé pour l'inférence de modèles CNN.
+**NUCLEO-F446RE** : Basée sur un Cortex-M4 (180 MHz) avec 128 ko de RAM et 512 ko de Flash.
+**Shield X-NUCLEO-IKS01A3** : Carte d'interface regroupant plusieurs capteurs MEMS (accélération, champ magnétique, température, humidité, pression) communicant via un bus I2C.
 
 ---
 
 ## 🚀 TP1 : Problème MNIST (Apprentissage Automatique)
-[cite_start]Ce TP se concentre sur la classification d'images de chiffres manuscrits (0 à 9) à partir du jeu de données classique MNIST[cite: 4, 5]. 
-* [cite_start]**Objectif** : Implémenter un réseau de neurones dense (Multi-Layer Perceptron / MLP) avec une couche d'entrée de 784 neurones (images aplaties de 28x28 pixels) et une sortie de 10 neurones (pour les 10 classes)[cite: 14, 15, 17, 18].
+Ce TP se concentre sur la classification d'images de chiffres manuscrits (0 à 9) à partir du jeu de données classique MNIST. 
+**Objectif** : Implémenter un réseau de neurones dense (Multi-Layer Perceptron / MLP) avec une couche d'entrée de 784 neurones (images aplaties de 28x28 pixels) et une sortie de 10 neurones (pour les 10 classes).
 * **Expérimentations** : 
-  * [cite_start]Comparaison de différentes fonctions d'activation : *softmax*, *ReLU*, *tanh*, *sigmoid*[cite: 30, 31, 33, 34].
-  * [cite_start]Évaluation de différents optimiseurs : *SGD* (classique), *Adam* (moderne et rapide), *RMSprop* (taux adaptatif), *Adagrad*[cite: 39, 40].
-  * [cite_start]Choix de la fonction coût adaptée (*categorical_crossentropy* ou *sparse_categorical_crossentropy*) en justifiant les compromis entre précision, temps d'apprentissage et taille du modèle[cite: 29, 37, 43, 44].
+Comparaison de différentes fonctions d'activation : *softmax*, *ReLU*, *tanh*, *sigmoid*.
+Évaluation de différents optimiseurs : *SGD* (classique), *Adam* (moderne et rapide), *RMSprop* (taux adaptatif), *Adagrad*.
+Choix de la fonction coût adaptée (*categorical_crossentropy* ou *sparse_categorical_crossentropy*) en justifiant les compromis entre précision, temps d'apprentissage et taille du modèle.
 
 ---
 
