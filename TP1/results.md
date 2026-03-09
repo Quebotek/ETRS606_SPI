@@ -97,3 +97,22 @@ L'analyse de ces différents algorithmes d'optimisation amène une conclusion es
 
 * **Aucun impact sur l'inférence (le système cible) :** Le choix de l'optimiseur n'a **aucune influence** sur le modèle final une fois compilé pour la cible. Que le réseau soit entraîné avec SGD ou Adam, la taille en mémoire reste strictement identique (50 890 paramètres pour notre architecture Tanh), tout comme le nombre d'opérations mathématiques nécessaires pour faire une prédiction. L'optimiseur n'existe plus lors de l'exécution sur le microcontrôleur.
 * **Efficacité de la phase de développement (Training) :** Bien que l'optimiseur ne tourne pas sur la cible embarquée, il est crucial pour l'ingénieur. **Adam** est ici le meilleur choix. Il permet d'atteindre la convergence maximale (près de 97%) en un minimum d'époques. Cela permet d'économiser un temps précieux et des ressources de calcul (énergie/GPU) lors de la phase d'entraînement par rapport à SGD ou Adagrad.
+* 
+
+## 3. Choix de la Fonction Coût
+
+**Conditions de test :**
+* Architecture fixée : 1 couche cachée (64 neurones), `tanh`, optimiseur `Adam`.
+* Différence clé : Formattage des labels et couche de sortie.
+
+### 3.1 Tableau Comparatif
+
+| Fonction Coût | Problème simulé | Format des Labels (y) | Couche de sortie | Accuracy (Test) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Categorical** | Multi-Classes (0 à 9) | One-Hot `[0,0,0,1,...]` | `Dense(10, softmax)` | **96.99%** |
+| **Sparse Categorical** | Multi-Classes (0 à 9) | Entiers `[3]` | `Dense(10, linéaire/logits)` | *96.78* |
+| **Binary** | Binaire ("Est-ce un 5 ?") | Binaire `[1]` ou `[0]` | `Dense(1, sigmoid)` | *99.49* |
+
+### 3.2 Analyse de l'impact pour l'Embarqué
+* **Mémoire RAM (Préparation des données) :** L'utilisation de `sparse_categorical_crossentropy` est extrêmement avantageuse. Elle évite la création de lourdes matrices One-Hot en RAM. Pour un dataset de 60 000 images, on stocke un vecteur de 60 000 octets au lieu de 600 000, ce qui est crucial pour le "On-Device Learning" sur microcontrôleur.
+* **Complexité réseau (Binaire) :** Dans le cas de `binary_crossentropy`, la couche de sortie est réduite à 1 seul neurone au lieu de 10. Le nombre de paramètres (synapses) diminue, allégeant encore plus le modèle en Flash et le temps de calcul CPU.
