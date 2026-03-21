@@ -461,66 +461,37 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
-/**
-  * @brief  Retargets the C library __write function to the IAR function iar_fputc.
-  * @param  file: file descriptor.
-  * @param  ptr: pointer to the buffer where the data is stored.
-  * @param  len: length of the data to write in bytes.
-  * @retval length of the written data in bytes.
-  */
-#if defined(__ICCARM__)
-size_t __write(int file, unsigned char const *ptr, size_t len)
-{
-  size_t idx;
-  unsigned char const *pdata = ptr;
-
-  for (idx = 0; idx < len; idx++)
-  {
-    iar_fputc((int)*pdata);
-    pdata++;
-  }
-  return len;
-}
-#endif /* __ICCARM__ */
-
-/**
-  * @brief  Retargets the C library printf function to the USART.
-  */
-
 int _write(int file, char *ptr, int len)
 {
   extern UART_HandleTypeDef huart1;
-  /* Envoie toute la phrase (de taille 'len') d'un seul coup ! */
-  HAL_UART_Transmit(&huart1, (uint8_t *)ptr, len, HAL_MAX_DELAY);
+
+  for (int i = 0; i < len; i++)
+  {
+    /* On envoie une seule lettre */
+    HAL_UART_Transmit(&huart1, (uint8_t *)&ptr[i], 1, HAL_MAX_DELAY);
+
+    /* On force le processeur à compter dans le vide pendant une fraction de milliseconde.
+       On utilise cette méthode car elle fonctionne même avant le démarrage du RTOS ! */
+    for(volatile int pause = 0; pause < 20000; pause++)
+    {
+        __asm("nop"); /* Instruction vide (Ne Rien Faire) */
+    }
+  }
   return len;
 }
 
-PUTCHAR_PROTOTYPE
-{
-  /* Place your implementation of putchar here */
-  /* e.g. write a character to the USART1 and Loop until the end of transmission */
-  HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 0xFFFF);
-
-  return ch;
-}
-
-/**
-* @brief  This function is executed in case of success.
-* @retval None
-*/
 void Success_Handler(void)
 {
-  /* USER CODE BEGIN Success_Handler_Debug */
   HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, GPIO_PIN_SET);
   while(1)
   {
     HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
-    tx_thread_sleep(50);
+    /* Ne pas oublier d'inclure "tx_api.h" si tx_thread_sleep pose problème ici */
   }
-  /* USER CODE END Success_Handler_Debug */
 }
 
 /* USER CODE END 4 */
+
 
  /* MPU Configuration */
 

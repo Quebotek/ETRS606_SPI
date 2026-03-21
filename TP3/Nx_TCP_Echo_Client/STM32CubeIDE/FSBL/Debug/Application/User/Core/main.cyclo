@@ -6,9 +6,8 @@
 /Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:336:15:SystemIsolation_Config	1
 /Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:387:13:MX_USART1_UART_Init	5
 /Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:435:13:MX_GPIO_Init	1
-/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:490:5:_write	1
-/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:498:1:__io_putchar	1
-/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:511:6:Success_Handler	1
-/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:527:6:MPU_Config	1
-/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:582:6:HAL_TIM_PeriodElapsedCallback	2
-/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:600:6:Error_Handler	1
+/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:464:5:_write	3
+/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:483:6:Success_Handler	1
+/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:498:6:MPU_Config	1
+/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:553:6:HAL_TIM_PeriodElapsedCallback	2
+/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:571:6:Error_Handler	1
