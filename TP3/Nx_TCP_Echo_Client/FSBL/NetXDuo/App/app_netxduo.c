@@ -25,6 +25,7 @@
 #include "nxd_dhcp_client.h"
 /* USER CODE BEGIN Includes */
 #include "nxd_mqtt_client.h"
+#include "nxd_dns.h"
 #include <stdio.h>
 /* USER CODE END Includes */
 
@@ -59,8 +60,16 @@ ULONG          IpAddress;
 ULONG          NetMask;
 
 NXD_MQTT_CLIENT my_mqtt_client;
-#define MQTT_CLIENT_STACK_SIZE 1024
+NX_DNS          my_dns;
+#define MQTT_CLIENT_STACK_SIZE 2048
 ULONG mqtt_client_stack[MQTT_CLIENT_STACK_SIZE / sizeof(ULONG)];
+
+/* Remplacez par vos informations réelles */
+#define DNS_SERVER_ADDRESS      IP_ADDRESS(1, 1, 1, 1)        /* DNS Cloudflare */
+#define BROKER_HOSTNAME         "meteo.quebotek.fr"  /* Votre adresse externe */
+#define MQTT_PORT               18830                         /* Votre port pfSense */
+#define MQTT_USER               "albert"
+#define MQTT_PASS               "pass123"
 
 /* USER CODE END PV */
 
@@ -341,66 +350,78 @@ static VOID nx_app_thread_entry (ULONG thread_input)
 static VOID App_TCP_Thread_Entry(ULONG thread_input)
 {
   UINT status;
-
-  /* L'adresse IP de votre VM Docker vue sur votre capture */
   NXD_ADDRESS mqtt_server_ip;
-  mqtt_server_ip.nxd_ip_version = NX_IP_VERSION_V4;
-  mqtt_server_ip.nxd_ip_address.v4 = IP_ADDRESS(10, 1, 110, 11);
 
-  tx_thread_sleep(500); /* Petite pause au démarrage pour le DHCP */
-  printf("\r\n--- Initialisation du Client MQTT ---\r\n");
+  /* Attente de l'initialisation réseau (DHCP) */
+  tx_thread_sleep(500);
+  printf("\r\n--- Demarrage Station Meteo IoT ---\r\n");
 
-  /* 1. Création du client MQTT avec le bon Pool (NxAppPool) */
+  /* === ÉTAPE 1 : CONFIGURATION DNS === */
+  status = nx_dns_create(&my_dns, &NetXDuoEthIpInstance, (UCHAR*)"MeteoDNS");
+  nx_dns_server_add(&my_dns, DNS_SERVER_ADDRESS);
+
+  printf("Resolution DNS de %s...\r\n", BROKER_HOSTNAME);
+  status = nxd_dns_host_by_name_get(&my_dns, (UCHAR*)BROKER_HOSTNAME, &mqtt_server_ip, 500, NX_IP_VERSION_V4);
+
+  if (status != NX_SUCCESS) {
+      printf("Erreur DNS: 0x%02X (Verifiez votre connexion Internet)\r\n", status);
+      return;
+  }
+  printf("IP Broker trouvee : %lu.%lu.%lu.%lu\r\n",
+         (mqtt_server_ip.nxd_ip_address.v4 >> 24),
+         (mqtt_server_ip.nxd_ip_address.v4 >> 16) & 0xFF,
+         (mqtt_server_ip.nxd_ip_address.v4 >> 8) & 0xFF,
+         (mqtt_server_ip.nxd_ip_address.v4 & 0xFF));
+
+  /* === ÉTAPE 2 : CRÉATION DU CLIENT MQTT === */
   status = nxd_mqtt_client_create(&my_mqtt_client,
-                                  "Station_Meteo", /* Nom du client */
-                                  "STM32",         /* ID du client */
-                                  5,               /* Longueur de l'ID */
-                                  &NetXDuoEthIpInstance,
-                                  &NxAppPool,      /* <-- LA VOICI ! */
-                                  (VOID*)mqtt_client_stack,
-                                  sizeof(mqtt_client_stack),
-                                  2,               /* Priorité du thread */
-                                  NX_NULL,         /* Mémoire supplémentaire */
-                                  0);
+                                  "Station_Meteo", "STM32N6", 7,
+                                  &NetXDuoEthIpInstance, &NxAppPool,
+                                  (VOID*)mqtt_client_stack, sizeof(mqtt_client_stack),
+                                  2, NX_NULL, 0);
 
   if (status != NX_SUCCESS) {
       printf("Erreur creation client MQTT: 0x%02X\r\n", status);
       return;
   }
 
-  /* 2. Connexion au serveur Mosquitto (Port 1883) */
-  printf("Connexion au broker 10.1.110.11...\r\n");
+  /* === ÉTAPE 3 : RÉGLAGE SÉCURITÉ (LOGIN) === */
+  /* On définit les identifiants AVANT de se connecter */
+  nxd_mqtt_client_login_set(&my_mqtt_client,
+                            MQTT_USER, sizeof(MQTT_USER)-1,
+                            MQTT_PASS, sizeof(MQTT_PASS)-1);
 
-    /* On remplace le 0 par NX_TRUE (clean session) et NX_FALSE par NX_WAIT_FOREVER */
-  status = nxd_mqtt_client_connect(&my_mqtt_client, &mqtt_server_ip, 1883, 50, NX_TRUE, NX_WAIT_FOREVER);
+  /* === ÉTAPE 4 : CONNEXION AU BROKER (Port 18830) === */
+  printf("Connexion au broker sur le port %d...\r\n", MQTT_PORT);
+  status = nxd_mqtt_client_connect(&my_mqtt_client, &mqtt_server_ip,
+                                   MQTT_PORT, 50, NX_TRUE, NX_WAIT_FOREVER);
 
   if (status != NX_SUCCESS) {
       printf("Echec de connexion MQTT: 0x%02X\r\n", status);
       return;
   }
-
   printf("Connecte au Broker MQTT avec succes !\r\n\n");
 
-  /* 3. La boucle infinie : envoi de la fausse température toutes les 5 secondes */
+  /* === ÉTAPE 5 : BOUCLE D'ENVOI === */
   while(1)
   {
-    char payload[] = "22.5";
+    char payload[] = "23.8"; /* Simulation de valeur */
 
-    printf("Envoi de la temperature : %s C...\r\n", payload);
+    printf("Publication temperature : %s C\r\n", payload);
 
-    /* Publication sur le canal "meteo/temperature" */
     status = nxd_mqtt_client_publish(&my_mqtt_client, "meteo/temperature", 17,
                                      (CHAR*)payload, sizeof(payload)-1,
-                                     0, 1, NX_WAIT_FOREVER);
+                                     0, 1, 200); /* Timeout de 2s pour l'envoi */
 
     if (status == NX_SUCCESS) {
-      printf("-> Message publie !\r\n");
-      HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin); /* Clignote si succès */
+      printf("-> Publie OK\r\n");
+      HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
     } else {
-      printf("-> Erreur de publication: 0x%02X\r\n", status);
+      printf("-> Erreur envoi: 0x%02X\r\n", status);
+      /* Si la connexion est perdue, on pourrait tenter une reconnexion ici */
     }
 
-    tx_thread_sleep(500);
+    tx_thread_sleep(500); /* Toutes les 5 secondes */
   }
 }
 /**

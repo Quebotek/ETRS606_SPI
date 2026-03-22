@@ -49,7 +49,10 @@ Application/User/NetXDuo/App/app_netxduo.o: \
  ../../../Middlewares/ST/netxduo/common/inc/nx_udp.h \
  ../../../Middlewares/ST/netxduo/common/inc/nx_ip.h \
  ../../../Middlewares/ST/netxduo/common/inc/nx_ipv4.h \
- ../../../Middlewares/ST/netxduo/addons/mqtt/nxd_mqtt_client.h
+ ../../../Middlewares/ST/netxduo/addons/mqtt/nxd_mqtt_client.h \
+ ../../../Middlewares/ST/netxduo/addons/dns/nxd_dns.h \
+ ../../../Middlewares/ST/netxduo/common/inc/nx_ipv4.h \
+ ../../../Middlewares/ST/netxduo/common/inc/nx_ipv6.h
 /Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.h:
 ../../../Middlewares/ST/netxduo/common/inc/nx_api.h:
 ../../../Middlewares/ST/threadx/ports/cortex_m55/gnu/inc/tx_port.h:
@@ -100,3 +103,6 @@ Application/User/NetXDuo/App/app_netxduo.o: \
 ../../../Middlewares/ST/netxduo/common/inc/nx_ip.h:
 ../../../Middlewares/ST/netxduo/common/inc/nx_ipv4.h:
 ../../../Middlewares/ST/netxduo/addons/mqtt/nxd_mqtt_client.h:
+../../../Middlewares/ST/netxduo/addons/dns/nxd_dns.h:
+../../../Middlewares/ST/netxduo/common/inc/nx_ipv4.h:
+../../../Middlewares/ST/netxduo/common/inc/nx_ipv6.h:
