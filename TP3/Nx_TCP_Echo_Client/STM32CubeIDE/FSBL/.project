@@ -33,6 +33,16 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>dns</name>
+			<type>2</type>
+			<location>/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/Middlewares/ST/netxduo/addons/dns</location>
+		</link>
+		<link>
+			<name>mqtt</name>
+			<type>2</type>
+			<location>/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/Middlewares/ST/netxduo/addons/mqtt</location>
+		</link>
+		<link>
 			<name>Doc/README.md</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/README.md</locationURI>

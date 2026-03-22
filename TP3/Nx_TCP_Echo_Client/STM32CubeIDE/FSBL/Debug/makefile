@@ -9,6 +9,8 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include mqtt/subdir.mk
+-include dns/subdir.mk
 -include Middlewares/threadx/Core/subdir.mk
 -include Middlewares/netxduo/NX\ Core/subdir.mk
 -include Middlewares/netxduo/LAN8742\ Phy\ Interface/subdir.mk

@@ -342,7 +342,7 @@ static void MX_ETH1_Init(void)
 
   /* set all required IPs as secure privileged */
   __HAL_RCC_RIFSC_CLK_ENABLE();
-  
+
   /*RIMC configuration*/
   RIMC_MasterConfig_t RIMC_master = {0};
   RIMC_master.MasterCID = RIF_CID_1;
@@ -491,7 +491,6 @@ void Success_Handler(void)
 }
 
 /* USER CODE END 4 */
-
 
  /* MPU Configuration */
 

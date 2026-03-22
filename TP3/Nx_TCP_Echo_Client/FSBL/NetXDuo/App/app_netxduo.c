@@ -24,6 +24,8 @@
 /* Private includes ----------------------------------------------------------*/
 #include "nxd_dhcp_client.h"
 /* USER CODE BEGIN Includes */
+#include "nxd_mqtt_client.h"
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -55,6 +57,11 @@ NX_TCP_SOCKET TCPSocket;
 
 ULONG          IpAddress;
 ULONG          NetMask;
+
+NXD_MQTT_CLIENT my_mqtt_client;
+#define MQTT_CLIENT_STACK_SIZE 1024
+ULONG mqtt_client_stack[MQTT_CLIENT_STACK_SIZE / sizeof(ULONG)];
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -74,7 +81,7 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
 {
   UINT ret = NX_SUCCESS;
   TX_BYTE_POOL *byte_pool = (TX_BYTE_POOL*)memory_ptr;
-  CHAR *pointer;
+   CHAR *pointer;
 
   /* USER CODE BEGIN MX_NetXDuo_MEM_POOL */
 
@@ -219,10 +226,10 @@ UINT MX_NetXDuo_Init(VOID *memory_ptr)
   /* set DHCP notification callback  */
   ret = tx_semaphore_create(&DHCPSemaphore, "DHCP Semaphore", 0);
 
-  if (ret != NX_SUCCESS)
-  {
-    return NX_DHCP_ERROR;
-  }
+    if (ret != NX_SUCCESS)
+    {
+      return NX_DHCP_ERROR;
+    }
 
   /* USER CODE BEGIN MX_NetXDuo_Init */
   /* Allocate the memory for Link thread   */
@@ -301,7 +308,7 @@ static VOID nx_app_thread_entry (ULONG thread_input)
     Error_Handler();
     /* USER CODE END DHCP client start error */
   }
-  printf("Looking for DHCP server ..\n");
+   printf("Looking for DHCP server ..\n");
   /* wait until an IP address is ready */
   if(tx_semaphore_get(&DHCPSemaphore, TX_WAIT_FOREVER) != TX_SUCCESS)
   {
@@ -334,43 +341,68 @@ static VOID nx_app_thread_entry (ULONG thread_input)
 static VOID App_TCP_Thread_Entry(ULONG thread_input)
 {
   UINT status;
-  NX_PACKET *response_packet;
-  ULONG target_ip = IP_ADDRESS(8, 8, 8, 8);
 
-  /* On importe l'accès direct au câble USB */
-  extern UART_HandleTypeDef huart1;
+  /* L'adresse IP de votre VM Docker vue sur votre capture */
+  NXD_ADDRESS mqtt_server_ip;
+  mqtt_server_ip.nxd_ip_version = NX_IP_VERSION_V4;
+  mqtt_server_ip.nxd_ip_address.v4 = IP_ADDRESS(10, 1, 110, 11);
 
-  /* Pause de démarrage */
-  tx_thread_sleep(500);
+  tx_thread_sleep(500); /* Petite pause au démarrage pour le DHCP */
+  printf("\r\n--- Initialisation du Client MQTT ---\r\n");
 
+  /* 1. Création du client MQTT avec le bon Pool (NxAppPool) */
+  status = nxd_mqtt_client_create(&my_mqtt_client,
+                                  "Station_Meteo", /* Nom du client */
+                                  "STM32",         /* ID du client */
+                                  5,               /* Longueur de l'ID */
+                                  &NetXDuoEthIpInstance,
+                                  &NxAppPool,      /* <-- LA VOICI ! */
+                                  (VOID*)mqtt_client_stack,
+                                  sizeof(mqtt_client_stack),
+                                  2,               /* Priorité du thread */
+                                  NX_NULL,         /* Mémoire supplémentaire */
+                                  0);
+
+  if (status != NX_SUCCESS) {
+      printf("Erreur creation client MQTT: 0x%02X\r\n", status);
+      return;
+  }
+
+  /* 2. Connexion au serveur Mosquitto (Port 1883) */
+  printf("Connexion au broker 10.1.110.11...\r\n");
+
+    /* On remplace le 0 par NX_TRUE (clean session) et NX_FALSE par NX_WAIT_FOREVER */
+  status = nxd_mqtt_client_connect(&my_mqtt_client, &mqtt_server_ip, 1883, 50, NX_TRUE, NX_WAIT_FOREVER);
+
+  if (status != NX_SUCCESS) {
+      printf("Echec de connexion MQTT: 0x%02X\r\n", status);
+      return;
+  }
+
+  printf("Connecte au Broker MQTT avec succes !\r\n\n");
+
+  /* 3. La boucle infinie : envoi de la fausse température toutes les 5 secondes */
   while(1)
   {
-    /* 1. On prépare un texte fixe, et on l'envoie en forçant l'UART matériel */
-    char msg1[] = "Envoi du Ping vers Google...\r\n";
-    HAL_UART_Transmit(&huart1, (uint8_t *)msg1, sizeof(msg1)-1, HAL_MAX_DELAY);
+    char payload[] = "22.5";
 
-    status = nx_icmp_ping(&NetXDuoEthIpInstance, target_ip, "PING", 4, &response_packet, 100);
+    printf("Envoi de la temperature : %s C...\r\n", payload);
 
-    if (status == NX_SUCCESS)
-    {
-      /* 2. Message de succès envoyé directement au matériel */
-      char msg2[] = "Ping REUSSI ! La carte a acces a Internet.\r\n\n";
-      HAL_UART_Transmit(&huart1, (uint8_t *)msg2, sizeof(msg2)-1, HAL_MAX_DELAY);
+    /* Publication sur le canal "meteo/temperature" */
+    status = nxd_mqtt_client_publish(&my_mqtt_client, "meteo/temperature", 17,
+                                     (CHAR*)payload, sizeof(payload)-1,
+                                     0, 1, NX_WAIT_FOREVER);
 
-      HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
-      nx_packet_release(response_packet);
-    }
-    else
-    {
-      /* 3. Message d'échec envoyé directement au matériel */
-      char msg3[] = "Ping ECHOUE.\r\n\n";
-      HAL_UART_Transmit(&huart1, (uint8_t *)msg3, sizeof(msg3)-1, HAL_MAX_DELAY);
+    if (status == NX_SUCCESS) {
+      printf("-> Message publie !\r\n");
+      HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin); /* Clignote si succès */
+    } else {
+      printf("-> Erreur de publication: 0x%02X\r\n", status);
     }
 
-    tx_thread_sleep(200);
+    tx_thread_sleep(500);
   }
 }
-
 /**
 * @brief  Link thread entry
 * @param thread_input: ULONG thread parameter

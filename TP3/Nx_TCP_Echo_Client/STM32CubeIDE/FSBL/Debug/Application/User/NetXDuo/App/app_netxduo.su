@@ -1,5 +1,5 @@
-/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:73:6:MX_NetXDuo_Init	64	static
-/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:253:13:ip_address_change_notify_callback	16	static
-/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:275:13:nx_app_thread_entry	32	static
-/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:334:13:App_TCP_Thread_Entry	144	static
-/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:379:13:App_Link_Thread_Entry	40	static
+/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:80:6:MX_NetXDuo_Init	64	static
+/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:260:13:ip_address_change_notify_callback	16	static
+/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:282:13:nx_app_thread_entry	32	static
+/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:341:13:App_TCP_Thread_Entry	72	static
+/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:411:13:App_Link_Thread_Entry	40	static

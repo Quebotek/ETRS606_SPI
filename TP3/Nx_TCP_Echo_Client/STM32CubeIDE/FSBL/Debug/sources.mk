@@ -35,4 +35,6 @@ Middlewares/netxduo/Ethernet\ Interface \
 Middlewares/netxduo/LAN8742\ Phy\ Interface \
 Middlewares/netxduo/NX\ Core \
 Middlewares/threadx/Core \
+dns \
+mqtt \
 

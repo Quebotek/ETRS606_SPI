@@ -691,3 +691,5 @@
 "./Middlewares/threadx/Core/txe_timer_deactivate.o"
 "./Middlewares/threadx/Core/txe_timer_delete.o"
 "./Middlewares/threadx/Core/txe_timer_info_get.o"
+"./dns/nxd_dns.o"
+"./mqtt/nxd_mqtt_client.o"
