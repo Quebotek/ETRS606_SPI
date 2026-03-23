@@ -1,0 +1,5 @@
+/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:89:6:MX_NetXDuo_Init	18
+/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:269:13:ip_address_change_notify_callback	3
+/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:291:13:nx_app_thread_entry	4
+/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:350:13:App_TCP_Thread_Entry	5
+/Users/albert/Cours/S-6/ETRS606_SPI/TP3/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:432:13:App_Link_Thread_Entry	6
