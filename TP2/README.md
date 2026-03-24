@@ -22,6 +22,7 @@ Nous avions pour objectif de récupérer les valeurs des capteurs de températur
 ces valeurs nous seront précieuses. C'est pourquoi nous nous sommes penchés sur les capteurs suivants :
 
 -HTS221 pour l'humidité et la température
+
 -LPS22HH pour la pression 
 
 Nous sommes donc bel et bien parvenus à obtenir ces 3 valeurs comme le démontre cette capture d'écran : 
