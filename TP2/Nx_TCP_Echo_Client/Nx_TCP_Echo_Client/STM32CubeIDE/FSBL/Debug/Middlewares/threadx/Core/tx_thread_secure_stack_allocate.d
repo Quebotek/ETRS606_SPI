@@ -1,0 +1,4 @@
+Middlewares/threadx/Core/tx_thread_secure_stack_allocate.o: \
+ /Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/Middlewares/ST/threadx/ports/cortex_m55/gnu/src/tx_thread_secure_stack_allocate.S \
+ ../../../FSBL/Core/Inc/tx_user.h
+../../../FSBL/Core/Inc/tx_user.h:

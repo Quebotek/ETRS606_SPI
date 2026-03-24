@@ -1,0 +1,13 @@
+../../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h:1165:22:LL_AHB3_GRP1_EnableClock	24	static
+../../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_ll_bus.h:1407:22:LL_AHB4_GRP1_EnableClock	24	static
+/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:104:5:main	24	static,ignoring_inline_asm
+/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:166:6:SystemClock_Config	624	static
+/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:284:13:MX_ETH1_Init	16	static
+/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:336:15:SystemIsolation_Config	16	static
+/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:387:13:MX_USART1_UART_Init	8	static
+/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:435:13:MX_GPIO_Init	32	static
+/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:488:1:__io_putchar	16	static
+/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:501:6:Success_Handler	8	static
+/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:517:6:MPU_Config	40	static,ignoring_inline_asm
+/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:572:6:HAL_TIM_PeriodElapsedCallback	16	static
+/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/FSBL/Core/Src/main.c:590:6:Error_Handler	8	static
