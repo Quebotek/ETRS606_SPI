@@ -25,8 +25,7 @@
 #define BROKER_HOSTNAME "meteo.quebotek.fr"
 #define MQTT_PORT       18830
 #define MQTT_CLIENT_ID  "STM32_NUCLEO_METEO"
-#define MQTT_TOPIC      "meteo/temperature"
-#define MQTT_MSG        "24.5"
+#define MQTT_TOPIC      "meteo/data"
 
 #define MQTT_USER       "albert"
 #define MQTT_PASS       "pass123"
@@ -167,31 +166,57 @@ static VOID App_TCP_Thread_Entry(ULONG thread_input)
                              &NetXDuoEthIpInstance, &NxAppPool, (VOID*)mqtt_client_stack, sizeof(mqtt_client_stack),
                              2, NX_NULL, 0);
 
-    /* --- NOUVEAU : Configuration de l'authentification --- */
+    /* --- Configuration de l'authentification --- */
     ret = nxd_mqtt_client_login_set(&my_mqtt_client,
                                     MQTT_USER, strlen(MQTT_USER),
                                     MQTT_PASS, strlen(MQTT_PASS));
     if (ret != NX_SUCCESS) {
         printf("❌ Erreur login_set (0x%02x)\n", ret);
     }
-    /* ------------------------------------------------------ */
 
     /* 4. MQTT : Connexion */
     printf("Connexion Broker avec authentification...\n");
     ret = _nxde_mqtt_client_connect(&my_mqtt_client, &broker_ip, MQTT_PORT, 50, NX_TRUE, NX_WAIT_FOREVER);
 
-  /* 5. Boucle de Publication */
+    if (ret != NX_SUCCESS) {
+        printf("❌ Echec connexion MQTT (0x%02x)\n", ret);
+        return;
+    }
+    printf("✅ MQTT Connecte !\n");
+
+  /* 5. Boucle de Publication en JSON */
   while(1)
   {
-    printf("Envoi Temperature: %s...\n", MQTT_MSG);
-    ret = _nxde_mqtt_client_publish(&my_mqtt_client, MQTT_TOPIC, strlen(MQTT_TOPIC), (CHAR*)MQTT_MSG, strlen(MQTT_MSG), NX_TRUE, 0, NX_WAIT_FOREVER);
+    char mqtt_payload[128]; // Buffer pour stocker la chaîne JSON
 
-    if (ret == NX_SUCCESS) {
-        HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
-    } else {
-        printf("⚠️ Erreur envoi (0x%02x)\n", ret);
+    /* Variables factices en attendant les vrais capteurs */
+    float fake_temp = 24.5;
+    float fake_press = 1013.2;
+    float fake_hum = 55.0; // Ajout de la fausse humidité en pourcentage
+
+    /* Formatage de la chaîne JSON avec la nouvelle variable */
+    int payload_len = snprintf(mqtt_payload, sizeof(mqtt_payload),
+                               "{\"device\": \"%s\", \"temp\": %.2f, \"press\": %.2f, \"hum\": %.2f}",
+                               MQTT_CLIENT_ID, fake_temp, fake_press, fake_hum);
+
+    /* Vérification de sécurité */
+    if (payload_len > 0 && payload_len < sizeof(mqtt_payload))
+    {
+        printf("Envoi JSON: %s\n", mqtt_payload);
+
+        /* Publication */
+        ret = _nxde_mqtt_client_publish(&my_mqtt_client, MQTT_TOPIC, strlen(MQTT_TOPIC),
+                                        (CHAR*)mqtt_payload, payload_len,
+                                        NX_TRUE, 0, NX_WAIT_FOREVER);
+
+        if (ret == NX_SUCCESS) {
+            HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
+        } else {
+            printf("⚠️ Erreur envoi (0x%02x)\n", ret);
+        }
     }
-    tx_thread_sleep(500); /* Toutes les 5s */
+
+    tx_thread_sleep(500); /* Pause de 5s */
   }
 }
 

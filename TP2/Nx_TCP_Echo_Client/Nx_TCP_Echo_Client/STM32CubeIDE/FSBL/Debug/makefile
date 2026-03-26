@@ -73,7 +73,7 @@ main-build: Nx_TCP_Echo_Client_FSBL.elf secondary-outputs
 
 # Tool invocations
 Nx_TCP_Echo_Client_FSBL.elf Nx_TCP_Echo_Client_FSBL.map: $(OBJS) $(USER_OBJS) /Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/STM32N657X0HXQ_AXISRAM2_fsbl.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Nx_TCP_Echo_Client_FSBL.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m55 -T"/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/STM32N657X0HXQ_AXISRAM2_fsbl.ld" --specs=nosys.specs -Wl,-Map="Nx_TCP_Echo_Client_FSBL.map" -Wl,--gc-sections -static -Wl,--cmse-implib -Wl,--out-implib=./secure_nsclib.o --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+	arm-none-eabi-gcc -o "Nx_TCP_Echo_Client_FSBL.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m55 -T"/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/STM32N657X0HXQ_AXISRAM2_fsbl.ld" --specs=nosys.specs -Wl,-Map="Nx_TCP_Echo_Client_FSBL.map" -Wl,--gc-sections -static -Wl,--cmse-implib -Wl,--out-implib=./secure_nsclib.o --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
