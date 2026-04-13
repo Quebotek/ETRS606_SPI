@@ -1,0 +1,5 @@
+../Middlewares/AI/Npu/ll_aton/ll_aton_cipher.c:71:5:LL_Streng_EncryptionInit	24	static
+../Middlewares/AI/Npu/ll_aton/ll_aton_cipher.c:111:5:LL_Streng_WeightEncryptionInit	48	static
+../Middlewares/AI/Npu/ll_aton/ll_aton_cipher.c:130:5:LL_Busif_SetKeys	24	static
+../Middlewares/AI/Npu/ll_aton/ll_aton_cipher.c:170:5:LL_EpochCtrl_EncryptionInit	24	static
+../Middlewares/AI/Npu/ll_aton/ll_aton_cipher.c:198:5:LL_DmaCypherInit	208	static

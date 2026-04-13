@@ -14,6 +14,8 @@ RM := rm -rf
 -include Middlewares/netxduo/LAN8742\ Phy\ Interface/subdir.mk
 -include Middlewares/netxduo/Ethernet\ Interface/subdir.mk
 -include Middlewares/netxduo/Addons\ DHCP\ Client/subdir.mk
+-include Middlewares/AI/Npu/ll_aton/subdir.mk
+-include Middlewares/AI/Npu/Devices/STM32N6XX/subdir.mk
 -include Drivers/STM32N6xx_HAL_Driver/subdir.mk
 -include Drivers/CMSIS/subdir.mk
 -include Drivers/BSP/Components/subdir.mk

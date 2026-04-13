@@ -35,6 +35,7 @@ Application/User/NetXDuo/App/app_netxduo.o: \
  ../../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_rif.h \
  ../../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_dma.h \
  ../../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_dma_ex.h \
+ ../../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_cacheaxi.h \
  ../../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_cortex.h \
  ../../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_eth.h \
  ../../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_eth_ex.h \
@@ -52,7 +53,19 @@ Application/User/NetXDuo/App/app_netxduo.o: \
  ../../../Middlewares/ST/netxduo/addons/dns/nxd_dns.h \
  ../../../Middlewares/ST/netxduo/common/inc/nx_ipv4.h \
  ../../../Middlewares/ST/netxduo/common/inc/nx_ipv6.h \
- ../../../Middlewares/ST/netxduo/addons/mqtt/nxd_mqtt_client.h
+ ../../../Middlewares/ST/netxduo/addons/mqtt/nxd_mqtt_client.h \
+ /Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/Middlewares/AI/Npu/ll_aton/ll_aton.h \
+ /Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/Middlewares/AI/Npu/ll_aton/ll_aton_attributes.h \
+ /Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/Middlewares/AI/Npu/ll_aton/ll_aton_config.h \
+ /Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/Middlewares/AI/Npu/ll_aton/ll_aton_osal.h \
+ /Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/Middlewares/AI/Npu/ll_aton/ll_aton_osal_threadx.h \
+ ../../../Middlewares/ST/threadx/common/inc/tx_thread.h \
+ /Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/Middlewares/AI/Npu/ll_aton/ll_aton_platform.h \
+ /Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/Middlewares/AI/Npu/Devices/STM32N6XX/mcu_cache.h \
+ /Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/Middlewares/AI/Npu/Devices/STM32N6XX/npu_cache.h \
+ /Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/Middlewares/AI/Npu/Devices/STM32N6XX/ATON.h \
+ /Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/Middlewares/AI/Npu/ll_aton/ll_aton_rcompat.h \
+ ../../../FSBL/Core/Inc/network.h
 /Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.h:
 ../../../Middlewares/ST/netxduo/common/inc/nx_api.h:
 ../../../Middlewares/ST/threadx/ports/cortex_m55/gnu/inc/tx_port.h:
@@ -88,6 +101,7 @@ Application/User/NetXDuo/App/app_netxduo.o: \
 ../../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_rif.h:
 ../../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_dma.h:
 ../../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_dma_ex.h:
+../../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_cacheaxi.h:
 ../../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_cortex.h:
 ../../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_eth.h:
 ../../../Drivers/STM32N6xx_HAL_Driver/Inc/stm32n6xx_hal_eth_ex.h:
@@ -106,3 +120,15 @@ Application/User/NetXDuo/App/app_netxduo.o: \
 ../../../Middlewares/ST/netxduo/common/inc/nx_ipv4.h:
 ../../../Middlewares/ST/netxduo/common/inc/nx_ipv6.h:
 ../../../Middlewares/ST/netxduo/addons/mqtt/nxd_mqtt_client.h:
+/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/Middlewares/AI/Npu/ll_aton/ll_aton.h:
+/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/Middlewares/AI/Npu/ll_aton/ll_aton_attributes.h:
+/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/Middlewares/AI/Npu/ll_aton/ll_aton_config.h:
+/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/Middlewares/AI/Npu/ll_aton/ll_aton_osal.h:
+/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/Middlewares/AI/Npu/ll_aton/ll_aton_osal_threadx.h:
+../../../Middlewares/ST/threadx/common/inc/tx_thread.h:
+/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/Middlewares/AI/Npu/ll_aton/ll_aton_platform.h:
+/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/Middlewares/AI/Npu/Devices/STM32N6XX/mcu_cache.h:
+/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/Middlewares/AI/Npu/Devices/STM32N6XX/npu_cache.h:
+/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/Middlewares/AI/Npu/Devices/STM32N6XX/ATON.h:
+/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/STM32CubeIDE/FSBL/Middlewares/AI/Npu/ll_aton/ll_aton_rcompat.h:
+../../../FSBL/Core/Inc/network.h:

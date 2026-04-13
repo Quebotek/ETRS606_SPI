@@ -1,0 +1,117 @@
+ST Edge AI Core v2.2.0-20266 2adc00962
+Created date          : 2026-04-12 14:40:01
+Parameters            : generate --target stm32n6 --name network -m /Users/albert/Cours/S-6/modele_meteo_stm32.tflite --st-neural-art n6-allmems-O3@/Users/albert/STM32Cube/Repository/Packs/STMicroelectronics/X-CUBE-AI/10.2.0/scripts/N6_scripts/user_neuralart.json --workspace /var/folders/37/v7_3dq7d2nz19hjwmn5_fgt80000gn/T/mxAI_workspace1717392005968757537261392980241875 --output /Users/albert/.stm32cubemx/network_output
+
+Model name - modele_meteo_stm32
+------ ----------------------------------- ------------- ------------ ------ -------------------------------- 
+m_id   layer (original)                    oshape        param/size     macc                     connected to 
+------ ----------------------------------- ------------- ------------ ------ -------------------------------- 
+0      serving_default_input_layer_30 ()   [b:1,c:8]                                                          
+       sequential_3_1_den..1_1_MatMul ()   [b:32,c:8]    256/1,024                                            
+       sequential_3_1_den..VariableOp ()   [b:32]        32/128                                               
+       gemm_0 (FULLY_CONNECTED)            [b:1,c:32]                    288   serving_default_input_layer_30 
+                                                                               sequential_3_1_den..1_1_MatMul 
+                                                                               sequential_3_1_den..VariableOp 
+       nl_0_nl (FULLY_CONNECTED)           [b:1,c:32]                     32                           gemm_0 
+------ ----------------------------------- ------------- ------------ ------ -------------------------------- 
+1      arith_constant1 ()                  [b:16,c:32]   512/2,048                                            
+       arith_constant3 ()                  [b:16]        16/64                                                
+       gemm_1 (FULLY_CONNECTED)            [b:1,c:16]                    528                          nl_0_nl 
+                                                                                              arith_constant1 
+                                                                                              arith_constant3 
+       nl_1_nl (FULLY_CONNECTED)           [b:1,c:16]                     16                           gemm_1 
+------ ----------------------------------- ------------- ------------ ------ -------------------------------- 
+2      arith_constant ()                   [b:5,c:16]    80/320                                               
+       arith_constant2 ()                  [b:5]         5/20                                                 
+       gemm_2 (FULLY_CONNECTED)            [b:1,c:5]                      85                          nl_1_nl 
+                                                                                               arith_constant 
+                                                                                              arith_constant2 
+------ ----------------------------------- ------------- ------------ ------ -------------------------------- 
+3      nl_3 (SOFTMAX)                      [b:1,c:5]                      75                           gemm_2 
+------ ----------------------------------- ------------- ------------ ------ -------------------------------- 
+model: macc=1,024 weights=3,604 activations=-- io=--
+
+
+
+
+
+Compilation details
+------------------------------------------------------------------------------------
+Compiler version: 1.1.1-14
+Compiler arguments:  -i /Users/albert/.stm32cubemx/network_output/modele_meteo_stm32_OE_3_3_0.onnx --json-quant-file /Users/albert/.stm32cubemx/network_output/modele_meteo_stm32_OE_3_3_0_Q.json -g network.c --load-mdesc /Users/albert/STM32Cube/Repository/Packs/STMicroelectronics/X-CUBE-AI/10.2.0/scripts/N6_scripts/my_mdescs/stm32n6.mdesc --load-mpool /Users/albert/STM32Cube/Repository/Packs/STMicroelectronics/X-CUBE-AI/10.2.0/scripts/N6_scripts/my_mpools/stm32n6.mpool --save-mpool-file /private/var/folders/37/v7_3dq7d2nz19hjwmn5_fgt80000gn/T/mxAI_workspace1717392005968757537261392980241875/neural_art__network/stm32n6.mpool --out-dir-prefix /private/var/folders/37/v7_3dq7d2nz19hjwmn5_fgt80000gn/T/mxAI_workspace1717392005968757537261392980241875/neural_art__network/ --optimization 3 --all-buffers-info --mvei --cache-maintenance --Oauto-sched --native-float --enable-virtual-mem-pools --Omax-ca-pipe 4 --Ocache-opt --Os --output-info-file c_info.json
+====================================================================================
+
+Memory usage information  (input/output buffers are included in activations)
+------------------------------------------------------------------------------------
+	flexMEM    [0x34000000 - 0x34000000]:          0  B /          0  B  (  0.00 % used) -- weights:          0  B (  0.00 % used)  activations:          0  B (  0.00 % used)
+	cpuRAM1    [0x34064000 - 0x34064000]:          0  B /          0  B  (  0.00 % used) -- weights:          0  B (  0.00 % used)  activations:          0  B (  0.00 % used)
+	cpuRAM2    [0x34100000 - 0x34200000]:          0  B /      1.000 MB  (  0.00 % used) -- weights:          0  B (  0.00 % used)  activations:          0  B (  0.00 % used)
+	npuRAM3    [0x34200000 - 0x34270000]:          0  B /    448.000 kB  (  0.00 % used) -- weights:          0  B (  0.00 % used)  activations:          0  B (  0.00 % used)
+	npuRAM4    [0x34270000 - 0x342E0000]:          0  B /    448.000 kB  (  0.00 % used) -- weights:          0  B (  0.00 % used)  activations:          0  B (  0.00 % used)
+	npuRAM5    [0x342E0000 - 0x34350000]:      1.066 kB /    448.000 kB  (  0.24 % used) -- weights:          0  B (  0.00 % used)  activations:      1.066 kB (  0.24 % used)
+	npuRAM6    [0x34350000 - 0x343C0000]:          0  B /    448.000 kB  (  0.00 % used) -- weights:          0  B (  0.00 % used)  activations:          0  B (  0.00 % used)
+	octoFlash  [0x71000000 - 0x78000000]:      3.520 kB /    112.000 MB  (  0.00 % used) -- weights:      3.520 kB (  0.00 % used)  activations:          0  B (  0.00 % used)
+	hyperRAM   [0x90000000 - 0x92000000]:          0  B /     32.000 MB  (  0.00 % used) -- weights:          0  B (  0.00 % used)  activations:          0  B (  0.00 % used)
+---
+Total:                                             4.586 kB                                  -- weights:      3.520 kB                  activations:      1.066 kB                   
+====================================================================================
+
+
+Used memory ranges
+------------------------------------------------------------------------------------
+	npuRAM5    [0x342E0000 - 0x34350000]: 0x342E0000-0x342E0450
+	octoFlash  [0x71000000 - 0x78000000]: 0x71000000-0x71000E20
+====================================================================================
+
+Epochs details
+------------------------------------------------------------------------------------
+Total number of epochs: 15 of which 9 implemented in software
+---
+epoch ID   HW/SW/EC Operation (SW only)
+epoch 1       HW    
+epoch 2      -SW-   (        Conv        )
+epoch 3       HW    
+epoch 4      -SW-   (        Add         )
+epoch 5      -SW-   (        Relu        )
+epoch 6       HW    
+epoch 7      -SW-   (        Conv        )
+epoch 8       HW    
+epoch 9      -SW-   (        Add         )
+epoch 10     -SW-   (        Relu        )
+epoch 11      HW    
+epoch 12     -SW-   (        Conv        )
+epoch 13      HW    
+epoch 14     -SW-   (        Add         )
+epoch 15     -SW-   (      Softmax       )
+==================================================================================== 
+ Requested memory size by section - "stm32n6npu" target
+ ------------------------------- -------- -------- ------ ------- 
+ module                              text   rodata   data     bss 
+ ------------------------------- -------- -------- ------ ------- 
+ NetworkRuntime1020_CM55_GCC.a     11,712       32      0       0 
+ network.o                          1,004    2,637      0       0 
+ ll_aton_reloc_network.o                0        0      0       0 
+ lib (toolchain)*                  12,296    2,262      0       0 
+ ll atonn runtime                   6,620    7,102      0      13 
+ ------------------------------- -------- -------- ------ ------- 
+ RT total**                        31,632   12,033      0      13 
+ ------------------------------- -------- -------- ------ ------- 
+ weights                                0    3,604      0       0 
+ activations                            0        0      0   1,092 
+ io                                     0        0      0       0 
+ ------------------------------- -------- -------- ------ ------- 
+ TOTAL                             31,632   15,637      0   1,105 
+ ------------------------------- -------- -------- ------ ------- 
+ *  toolchain objects (libm/libgcc*)
+ ** RT AI runtime objects (kernels+infrastructure)
+  
+  Summary - "stm32n6npu" target
+  --------------------------------------------------
+               FLASH (ro)      %*   RAM (rw)      % 
+  --------------------------------------------------
+  RT total         43,665   92.4%         13   1.2% 
+  --------------------------------------------------
+  TOTAL            47,269              1,105        
+  --------------------------------------------------
+  *  rt/total
+

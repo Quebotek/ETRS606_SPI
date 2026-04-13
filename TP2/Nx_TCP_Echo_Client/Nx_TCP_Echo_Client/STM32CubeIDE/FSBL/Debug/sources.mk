@@ -30,6 +30,8 @@ Application/User/Startup \
 Drivers/BSP/Components \
 Drivers/CMSIS \
 Drivers/STM32N6xx_HAL_Driver \
+Middlewares/AI/Npu/Devices/STM32N6XX \
+Middlewares/AI/Npu/ll_aton \
 Middlewares/netxduo/Addons\ DHCP\ Client \
 Middlewares/netxduo/Ethernet\ Interface \
 Middlewares/netxduo/LAN8742\ Phy\ Interface \
