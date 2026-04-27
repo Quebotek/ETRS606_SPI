@@ -1,0 +1,4 @@
+/Users/albert/Cours/S-6/Projet_IA_2.0/Nx_TCP_Echo_Client/FSBL/X-CUBE-AI/App/network_data.c:42:11:ai_network_data_activations_buffer_get	72	static
+/Users/albert/Cours/S-6/Projet_IA_2.0/Nx_TCP_Echo_Client/FSBL/X-CUBE-AI/App/network_data.c:60:11:ai_network_data_weights_buffer_get	72	static
+/Users/albert/Cours/S-6/Projet_IA_2.0/Nx_TCP_Echo_Client/FSBL/X-CUBE-AI/App/network_data.c:78:11:ai_network_data_weights_get	4	static
+/Users/albert/Cours/S-6/Projet_IA_2.0/Nx_TCP_Echo_Client/FSBL/X-CUBE-AI/App/network_data.c:91:9:ai_network_data_params_get	32	static

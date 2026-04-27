@@ -1,0 +1,13 @@
+/Users/albert/Cours/S-6/Projet_IA_2.0/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:84:16:hts221_write	2
+/Users/albert/Cours/S-6/Projet_IA_2.0/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:89:16:hts221_read	2
+/Users/albert/Cours/S-6/Projet_IA_2.0/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:95:16:lps22hh_write	2
+/Users/albert/Cours/S-6/Projet_IA_2.0/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:100:16:lps22hh_read	2
+/Users/albert/Cours/S-6/Projet_IA_2.0/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:115:14:get_unix_time	2
+/Users/albert/Cours/S-6/Projet_IA_2.0/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:121:13:unix_to_datetime	1
+/Users/albert/Cours/S-6/Projet_IA_2.0/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:140:12:is_dst_france	19
+/Users/albert/Cours/S-6/Projet_IA_2.0/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:156:13:mqtt_connect	3
+/Users/albert/Cours/S-6/Projet_IA_2.0/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:177:6:MX_NetXDuo_Init	16
+/Users/albert/Cours/S-6/Projet_IA_2.0/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:240:13:nx_app_thread_entry	9
+/Users/albert/Cours/S-6/Projet_IA_2.0/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:319:13:App_TCP_Thread_Entry	21
+/Users/albert/Cours/S-6/Projet_IA_2.0/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:542:13:App_Link_Thread_Entry	2
+/Users/albert/Cours/S-6/Projet_IA_2.0/Nx_TCP_Echo_Client/FSBL/NetXDuo/App/app_netxduo.c:564:13:ip_address_change_notify_callback	2
