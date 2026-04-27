@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Station Météo STM32</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0f1e;
+    --card: #111827;
+    --border: #1e2d45;
+    --accent: #38bdf8;
+    --accent2: #818cf8;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --success: #34d399;
+    --warning: #fbbf24;
+    --danger: #f87171;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    padding: 20px 16px 40px;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: -200px; left: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(56,189,248,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .status-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--success);
+    box-shadow: 0 0 8px var(--success);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .station-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 6px;
+  }
+
+  .prediction-card {
+    background: linear-gradient(135deg, #0f1f3d 0%, #111827 100%);
+    border: 1px solid var(--accent);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .prediction-card::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, rgba(56,189,248,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .prediction-label {
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 10px;
+  }
+
+  .prediction-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .prediction-proba {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .prediction-proba span {
+    color: var(--accent2);
+    font-weight: 500;
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .metric-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 16px;
+    transition: border-color 0.2s;
+  }
+
+  .metric-card:hover {
+    border-color: var(--accent);
+  }
+
+  .metric-icon {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .metric-label {
+    font-size: 10px;
+    font-family: 'Space Mono', monospace;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 6px;
+  }
+
+  .metric-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .metric-unit {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 400;
+    margin-left: 2px;
+  }
+
+  .pressure-card {
+    grid-column: 1 / -1;
+  }
+
+  .last-update {
+    text-align: center;
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .last-update span {
+    color: var(--accent);
+  }
+
+  .refresh-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .refresh-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .refresh-btn svg {
+    width: 14px; height: 14px;
+    transition: transform 0.5s;
+  }
+
+  .refresh-btn.loading svg {
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .error-msg {
+    background: rgba(248,113,113,0.1);
+    border: 1px solid var(--danger);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: var(--danger);
+    margin-bottom: 16px;
+    display: none;
+  }
+
+  .skeleton {
+    background: linear-gradient(90deg, var(--border) 25%, #1e3050 50%, var(--border) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 6px;
+    color: transparent;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  .meteo-icon {
+    font-size: 28px;
+    position: absolute;
+    top: 20px; right: 24px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">STM32 · Météo</div>
+  <div class="status-dot" id="statusDot"></div>
+</header>
+
+<div class="station-title">STM32-Station-Meteo</div>
+
+<div class="error-msg" id="errorMsg"></div>
+
+<div class="prediction-card">
+  <div class="meteo-icon" id="meteoIcon">—</div>
+  <div class="prediction-label">Prédiction IA</div>
+  <div class="prediction-value" id="prediction">—</div>
+  <div class="prediction-proba" id="proba"></div>
+</div>
+
+<div class="metrics-grid">
+  <div class="metric-card">
+    <div class="metric-icon">🌡️</div>
+    <div class="metric-label">Température</div>
+    <div class="metric-value" id="temp">—<span class="metric-unit">°C</span></div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-icon">💧</div>
+    <div class="metric-label">Humidité</div>
+    <div class="metric-value" id="hum">—<span class="metric-unit">%</span></div>
+  </div>
+  <div class="metric-card pressure-card">
+    <div class="metric-icon">🔵</div>
+    <div class="metric-label">Pression Atmosphérique</div>
+    <div class="metric-value" id="pres">—<span class="metric-unit">hPa</span></div>
+  </div>
+</div>
+
+<div class="last-update" id="lastUpdate">Chargement...</div>
+
+<button class="refresh-btn" id="refreshBtn" onclick="fetchData()">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M23 4v6h-6M1 20v-6h6"/>
+    <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
+  </svg>
+  Actualiser
+</button>
+
+<script>
+const ZABBIX_URL = "/zabbix-api/";
+const TOKEN = "e024ae6e6edc05511a1d1edfc0791448b900f3c7bf4c0031d9632cb0b4d23e98";
+const HOST = "STM32-Station-Meteo";
+const ITEMS = ["meteo.temp", "meteo.humidity", "meteo.pressure", "meteo.prediction"];
+
+const ICONS = {
+  "Dégagé": "☀️", "Degage": "☀️",
+  "Nuageux": "☁️",
+  "Pluie": "🌧️",
+  "Brouillard": "🌫️",
+  "Extrême": "⛈️", "Extreme": "⛈️",
+};
+
+async function zabbixCall(method, params) {
+  const res = await fetch(ZABBIX_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ jsonrpc: "2.0", method, params, auth: TOKEN, id: 1 })
+  });
+  const data = await res.json();
+  if (data.error) throw new Error(data.error.data || data.error.message);
+  return data.result;
+}
+
+async function fetchData() {
+  const btn = document.getElementById("refreshBtn");
+  const err = document.getElementById("errorMsg");
+  btn.classList.add("loading");
+  err.style.display = "none";
+
+  try {
+    const items = await zabbixCall("item.get", {
+      output: ["key_", "lastvalue", "lastclock"],
+      host: HOST,
+      filter: { key_: ITEMS }
+    });
+
+    const values = {};
+    items.forEach(i => { values[i.key_] = { v: i.lastvalue, ts: i.lastclock }; });
+
+    const temp = values["meteo.temp"]?.v ?? "—";
+    const hum  = values["meteo.humidity"]?.v ?? "—";
+    const pres = values["meteo.pressure"]?.v ?? "—";
+    const pred = values["meteo.prediction"]?.v ?? "—";
+    const ts   = values["meteo.temp"]?.ts;
+
+    document.getElementById("temp").innerHTML = `${parseFloat(temp).toFixed(1)}<span class="metric-unit">°C</span>`;
+    document.getElementById("hum").innerHTML  = `${parseFloat(hum).toFixed(0)}<span class="metric-unit">%</span>`;
+    document.getElementById("pres").innerHTML = `${parseFloat(pres).toFixed(1)}<span class="metric-unit">hPa</span>`;
+    document.getElementById("prediction").textContent = pred;
+    document.getElementById("meteoIcon").textContent = ICONS[pred] ?? "🌤️";
+    document.getElementById("proba").innerHTML = "";
+
+    if (ts) {
+      const date = new Date(ts * 1000);
+      document.getElementById("lastUpdate").innerHTML =
+        `Mis à jour <span>${date.toLocaleTimeString('fr-FR')}</span>`;
+    }
+
+    document.getElementById("statusDot").style.background = "var(--success)";
+    document.getElementById("statusDot").style.boxShadow = "0 0 8px var(--success)";
+
+  } catch (e) {
+    err.textContent = "Erreur : " + e.message;
+    err.style.display = "block";
+    document.getElementById("statusDot").style.background = "var(--danger)";
+    document.getElementById("statusDot").style.boxShadow = "0 0 8px var(--danger)";
+  }
+
+  btn.classList.remove("loading");
+}
+
+fetchData();
+setInterval(fetchData, 60000);
+</script>
+</body>
+</html>

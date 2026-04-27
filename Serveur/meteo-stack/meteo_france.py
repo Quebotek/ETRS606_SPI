@@ -3,7 +3,7 @@ import subprocess
 import time
 
 ZABBIX_SERVER = "10.1.110.50"
-AI_BRAIN_URL = "http://172.19.0.3:5000/predict"
+AI_BRAIN_URL = "http://ai-brain:5000/predict"
 
 
 VILLES = {
