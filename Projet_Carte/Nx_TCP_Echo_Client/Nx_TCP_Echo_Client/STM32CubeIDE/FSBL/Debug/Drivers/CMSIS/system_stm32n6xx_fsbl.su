@@ -1,3 +1,0 @@
-/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/FSBL/Core/Src/system_stm32n6xx_fsbl.c:175:6:SystemInit	4	static
-/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/FSBL/Core/Src/system_stm32n6xx_fsbl.c:330:6:SystemCoreClockUpdate	56	static
-/Users/albert/Cours/S-6/ETRS606_SPI/TP2/Nx_TCP_Echo_Client/Nx_TCP_Echo_Client/FSBL/Core/Src/system_stm32n6xx_fsbl.c:483:24:SECURE_SystemCoreClockUpdate	16	static
